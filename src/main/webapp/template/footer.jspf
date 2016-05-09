@@ -1,13 +1,17 @@
 <%-- any content can be specified here e.g.: --%>
 
 
+<!--FECHAMENTO ROW
+    FECHAMENTO COL
+    FECHAMENTO DO CONTAINER -->
+            </div>
+        </div>
+    </div>
+
 <div id="footer">
 
     <p>DocSystem - Direitos Reservados</p>
 
-</div>
-
-<!-- FECHAMENTO DO CONTAINER -->
 </div>
 
 </body>
