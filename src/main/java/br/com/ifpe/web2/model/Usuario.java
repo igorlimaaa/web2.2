@@ -5,36 +5,83 @@
  */
 package br.com.ifpe.web2.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
  * @author Eduardo
+ * @author IgorLima
  */
-public class Usuario {
-    private String cpf;
-    private String nome;
-    private String sobrenome;
-    private char sexo;
-    private String email;
-    private String senha;
-    private Endereco endereco;
-    private Telefone telefone;
-    private Date dataNasc;
 
-    public Usuario() {
+@Entity
+@Table(name = "tb_usuario")
+@Audited
+public class Usuario implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int codigo;
+    
+    @Column
+    @NotEmpty(message="CPF não inserido")    
+    private String cpf;
+    
+    @Column
+    private String nome;
+    
+    @Column
+    private String sobrenome;
+    
+    @Column
+    private char sexo;
+    
+    @Column
+    private String email;
+    
+    @Column
+    private String senha;
+    
+    @Column
+    private String endereco;
+    
+    @Column
+    private String bairro;
+    
+    @Column
+    private String cidade;
+    
+    @Column
+    private int telefone;
+    
+    @Column(name = "data_cadastro")
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "Data não informada")
+    @NotAudited
+    private Date dataCadastro;
+
+    public Usuario (){
+        
     }
 
-    public Usuario(String cpf, String nome, String sobrenome, char sexo, String email, String senha, Endereco endereco, Telefone telefone, Date dataNasc) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.sexo = sexo;
-        this.email = email;
-        this.senha = senha;
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.dataNasc = dataNasc;
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getCpf() {
@@ -85,30 +132,45 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Endereco getEndereco() {
+    public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public Telefone getTelefone() {
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public int getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Telefone telefone) {
+    public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
 
-    public Date getDataNasc() {
-        return dataNasc;
+    public Date getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setDataNasc(Date dataNasc) {
-        this.dataNasc = dataNasc;
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
     
-    
-    
+
 }

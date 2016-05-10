@@ -28,10 +28,10 @@ public class FinalizarConsultaServlet extends HttpServlet {
 
     private Endereco endereco = new Endereco("Rua 171, n 0", "x", "y", "PE", 55555123);
     private Telefone telefone = new Telefone(81, 99990000);
-    private Medico medico = new Medico("CRM-0192", "012.345.678-90", "Maria", "Silva", 'F', "mariasilva@x.com", "1234", endereco, telefone, new Date());
-    private Usuario usuario = new Usuario("111.111.111-11", "João", "Silva", 'M', "joaosilva@teste.com", "12345", endereco, telefone, new Date());
+   // private Medico medico = new Medico("CRM-0192", "012.345.678-90", "Maria", "Silva", 'F', "mariasilva@x.com", "1234", endereco, telefone, new Date());
+    //private Usuario usuario = new Usuario("111.111.111-11", "João", "Silva", 'M', "joaosilva@teste.com", "12345", endereco, telefone, new Date());
     private Clinica clinica = new Clinica("Clínica X", endereco, telefone);
-    private Consulta consulta = new Consulta(usuario, medico, new Date("12/05/2016"), clinica, "Cardiologista", null, false);
+    //private Consulta consulta = new Consulta(usuario, medico, new Date("12/05/2016"), clinica, "Cardiologista", null, false);
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -46,7 +46,7 @@ public class FinalizarConsultaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        request.setAttribute("consulta", consulta);
+      //  request.setAttribute("consulta", consulta);
         
         RequestDispatcher rd = request.getRequestDispatcher("/view/finalizarConsulta.jsp");
         rd.forward(request, response);

@@ -17,10 +17,10 @@ public class Medico extends Usuario {
     public Medico() {
     }
 
-    public Medico(String crm, String cpf, String nome, String sobrenome, char sexo, String email, String senha, Endereco endereco, Telefone telefone, Date dataNasc) {
+    /*public Medico(String crm, String cpf, String nome, String sobrenome, char sexo, String email, String senha, Endereco endereco, Telefone telefone, Date dataNasc) {
         super(cpf, nome, sobrenome, sexo, email, senha, endereco, telefone, dataNasc);
         this.crm = crm;
-    }
+    }*/
 
     public String getCrm() {
         return crm;

@@ -1,18 +1,54 @@
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.UsuarioDAO;
+import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Serializable;
+import java.sql.SQLException;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Eduardo
+ * @author IgorLima
  */
-public class RegistrarServlet extends HttpServlet {
+
+@ManagedBean
+@SessionScoped
+public class RegistrarServlet extends HttpServlet implements Serializable {
+    
+    private Usuario usuario;
+    private UsuarioDAO usuarioDAO;
+    
+    public RegistrarServlet() throws SQLException{
+        usuarioDAO = new UsuarioDAO();
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    public void novo(ActionEvent actionEvent) {
+        usuario = new Usuario();
+    }
+    
+    public void gravar(ActionEvent actionEvent) {
+        usuarioDAO.cadastrarUsuario(usuario);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("dialogCadastrarProduto.hide()");
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
