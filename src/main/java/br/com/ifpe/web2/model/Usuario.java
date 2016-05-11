@@ -64,7 +64,7 @@ public class Usuario implements Serializable {
     private String cidade;
     
     @Column
-    private int telefone;
+    private String telefone;
     
     @Column(name = "data_cadastro")
     @Temporal(TemporalType.DATE)
@@ -156,11 +156,11 @@ public class Usuario implements Serializable {
         this.cidade = cidade;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
