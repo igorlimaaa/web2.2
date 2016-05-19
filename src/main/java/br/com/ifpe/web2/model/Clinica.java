@@ -1,27 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.ifpe.web2.model;
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.envers.Audited;
 
 /**
  *
  * @author Eduardo
+ * @author Igorlima
  */
-public class Clinica {
+
+@Entity
+@Table(name="tb_clinica")
+@Audited
+public class Clinica implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int codigo;
     
+    @Column
     private String nome;
-    private Endereco endereco;
-    private Telefone telefone;
+    
+    @Column
+    private String endereco;
+    
+    @Column
+    private String telefone;
 
     public Clinica() {
     }
 
-    public Clinica(String nome, Endereco endereco, Telefone telefone) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.telefone = telefone;
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -32,20 +51,23 @@ public class Clinica {
         this.nome = nome;
     }
 
-    public Endereco getEndereco() {
+    public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public Telefone getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Telefone telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
     
+    
+
+   
 }

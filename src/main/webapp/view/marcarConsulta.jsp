@@ -2,7 +2,9 @@
     Document   : marcarConsulta
     Created on : 24/04/2016, 19:57:13
     Author     : Eduardo
+    Author     : Igorlima
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <h2>Marcar Consulta</h2>
 
@@ -29,12 +31,15 @@
     </div>
     
     <div class="form-group-lg">
-
         <label for="clinica">Clínica:</label>
-        <select name="clinica" id="clinica" class="form-control input-lg" tabindex="3">
-            <option>Selecione</option>
+        <select name="comboClinica" class="form-control input-lg" tabindex="2">
+            <option value="">Selecione</option>
+            <c:forEach var="clinica" items="${clinicas}">
+                <option value="${clinica.codigo}">
+                    ${clinica.nome}
+                </option>
+             </c:forEach>
         </select>
-
     </div>
     
     <div class="form-group-lg">

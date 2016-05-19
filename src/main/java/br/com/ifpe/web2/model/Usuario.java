@@ -7,6 +7,8 @@ package br.com.ifpe.web2.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -30,6 +32,8 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 @Table(name = "tb_usuario")
 @Audited
+@SessionScoped
+@Named
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,6 +75,17 @@ public class Usuario implements Serializable {
     @NotNull(message = "Data não informada")
     @NotAudited
     private Date dataCadastro;
+    
+    @Transient
+    private boolean logado;
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
     public Usuario (){
         

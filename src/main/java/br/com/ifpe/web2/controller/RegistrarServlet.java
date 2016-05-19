@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +28,24 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class RegistrarServlet extends HttpServlet implements Serializable {
 
+    @Inject
     private Usuario usuario;
+    @Inject
     private UsuarioDAO usuarioDAO;
+    
+    public String fazerLogin(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (usuarioDAO.fazerLogin(usuario)){
+            usuario.setLogado(true);;
+            return "/view/login.jsp?faces-redirect=true";
+        } else {
+            usuario.setLogado(false);
+            FacesMessage mensagem = new FacesMessage ("Usuário/Senha" + "Inválidos!");
+            mensagem.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage(null, mensagem);
+        }
+        return null;
+    }
 
     public RegistrarServlet() throws SQLException {
         usuarioDAO = new UsuarioDAO();
@@ -63,7 +82,7 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
             throws ServletException, IOException {
         usuario = carregarUsuario(request);
         usuarioDAO.cadastrarUsuario(usuario);
-        RequestDispatcher rd = request.getRequestDispatcher("/view/registrar.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
         rd.forward(request, response);
     }
     

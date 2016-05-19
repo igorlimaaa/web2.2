@@ -11,7 +11,8 @@ import java.util.Date;
  *
  * @author Eduardo
  */
-public class Medico extends Usuario {
+
+public class Medico {
     private String crm;
 
     public Medico() {

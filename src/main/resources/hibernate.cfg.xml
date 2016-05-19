@@ -13,6 +13,8 @@
         <property name="hibernate.show_sql">true</property>
         
         <mapping class="br.com.ifpe.web2.model.Usuario"/>
+        <mapping class="br.com.ifpe.web2.model.Clinica"/>
+        <mapping class="br.com.ifpe.web2.model.Consulta"/>
         
     </session-factory>
 </hibernate-configuration>
