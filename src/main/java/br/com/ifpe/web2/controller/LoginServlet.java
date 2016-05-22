@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        System.out.println("LoginServlet123");
         RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
         rd.forward(request, response);
 

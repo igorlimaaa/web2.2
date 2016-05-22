@@ -18,26 +18,26 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igor_
  */
-@WebFilter("*.jsp")
+@WebFilter("*.*")
 public class AutorizacaoFilter implements Filter{
 
-    @Inject
+   // @Inject
     private Usuario usuario;
        
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) 
             throws IOException, ServletException {
         
-        //System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        HttpServletResponse response = (HttpServletResponse) res;
-        HttpServletRequest request = (HttpServletRequest) req;
-        
-        if (!usuario.isLogado() && !request.getRequestURI().endsWith("/view/login.jsp")
-                && !request.getRequestURI().contains("/javax.faces.resource/")){
-            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
-        } else {
-            chain.doFilter(req, res);
-        }       
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+//        HttpServletResponse response = (HttpServletResponse) res;
+//        HttpServletRequest request = (HttpServletRequest) req;
+//        
+//        if (!usuario.isLogado() && !request.getRequestURI().endsWith("/view/login.jsp")
+//                && !request.getRequestURI().contains("/javax.faces.resource/")){
+//            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+//        } else {
+//            chain.doFilter(req, res);
+//        }       
     }
 
     @Override
