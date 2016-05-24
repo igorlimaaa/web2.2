@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igor_
  */
-@WebFilter("*.*")
+@WebFilter("/*")
 public class AutorizacaoFilter implements Filter{
 
-   // @Inject
+    //@Inject
     private Usuario usuario;
        
     @Override
@@ -32,13 +33,13 @@ public class AutorizacaoFilter implements Filter{
 //        HttpServletResponse response = (HttpServletResponse) res;
 //        HttpServletRequest request = (HttpServletRequest) req;
 //        
-//        if (!usuario.isLogado() && !request.getRequestURI().endsWith("/view/login.jsp")
-//                && !request.getRequestURI().contains("/javax.faces.resource/")){
-//            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
-//        } else {
-//            chain.doFilter(req, res);
-//        }       
-    }
+//        if (!usuario.isLogado()) {
+//            RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
+//            rd.forward(request, response);
+ //       }else {
+            chain.doFilter(req, res);
+        }       
+    //}
 
     @Override
     public void init(FilterConfig filterConfig){
