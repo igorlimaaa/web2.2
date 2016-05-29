@@ -5,14 +5,22 @@
  */
 package br.com.ifpe.web2.model;
 
-import java.util.List;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Eduardo
  */
-public class Diagnostico {
+
+@Embeddable
+public class Diagnostico implements Serializable {
+    
+    @Column
     private String diagnostico;
+    
+    @Column
     private String medicamentos;
 
     public Diagnostico() {

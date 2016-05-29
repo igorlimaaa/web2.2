@@ -4,7 +4,6 @@
     Author     : Eduardo
     Author     : Igorlima
 --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <h2>Marcar Consulta</h2>
 

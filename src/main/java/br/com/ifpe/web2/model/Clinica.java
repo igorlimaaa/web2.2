@@ -2,6 +2,7 @@ package br.com.ifpe.web2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,11 @@ public class Clinica implements Serializable{
     @Column
     private String nome;
     
-    @Column
-    private String endereco;
+    @Embedded
+    private Endereco endereco;
     
-    @Column
-    private String telefone;
+    @Embedded
+    private Telefone telefone;
 
     public Clinica() {
     }
@@ -51,23 +52,23 @@ public class Clinica implements Serializable{
         this.nome = nome;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
+    public Telefone getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
     }
-    
-    
+
+   
 
    
 }

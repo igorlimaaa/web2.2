@@ -5,12 +5,22 @@
  */
 package br.com.ifpe.web2.model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 /**
  *
  * @author Eduardo
  */
-public class Telefone {
+
+@Embeddable
+public class Telefone implements Serializable {
+    
+    @Column
     private int ddd;
+    
+    @Column
     private int numero;
 
     public Telefone() {

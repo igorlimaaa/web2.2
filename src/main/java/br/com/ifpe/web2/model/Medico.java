@@ -12,9 +12,10 @@ import java.util.Date;
  * @author Eduardo
  */
 
-public class Medico {
+public class Medico extends Usuario{
     private String crm;
-
+    private String especialidade;
+    
     public Medico() {
     }
 
@@ -29,6 +30,14 @@ public class Medico {
 
     public void setCrm(String crm) {
         this.crm = crm;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
     
 }

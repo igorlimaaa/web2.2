@@ -6,6 +6,7 @@ import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -107,12 +108,12 @@ public class MarcarConsultaServlet extends HttpServlet {
     
     private Consulta inserir(HttpServletRequest request){
         consulta = new Consulta();
-        consulta.setCodigo(1);
-        consulta.setEspecialidade(request.getParameter("especialidade"));
         
-        consulta.setMedico(request.getParameter("medico"));
-        consulta.setClinica(request.getParameter("clinica"));
-        consulta.setData(request.getParameter("data"));
+        //consulta.setUsuario();
+        
+        consulta.setAtendida(false);
+        consulta.setData(new Date(request.getParameter("data")));
+        
         return consulta;
         
     }

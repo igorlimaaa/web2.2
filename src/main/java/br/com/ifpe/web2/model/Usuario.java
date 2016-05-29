@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,17 +59,15 @@ public class Usuario implements Serializable {
     @Column
     private String senha;
     
-    @Column
-    private String endereco;
+    @Embedded
+    private Endereco endereco;
     
-    @Column
-    private String bairro;
+    @Embedded
+    private Telefone telefone;
     
-    @Column
-    private String cidade;
-    
-    @Column
-    private String telefone;
+    @Column(name = "data_nasc")
+    @Temporal(TemporalType.DATE)
+    private Date dataNasc;
     
     @Column(name = "data_cadastro")
     @Temporal(TemporalType.DATE)
@@ -78,14 +77,6 @@ public class Usuario implements Serializable {
     
     @Transient
     private boolean logado;
-
-    public boolean isLogado() {
-        return logado;
-    }
-
-    public void setLogado(boolean logado) {
-        this.logado = logado;
-    }
 
     public Usuario (){
         
@@ -147,36 +138,28 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getTelefone() {
+    public Telefone getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
+    }
+
+    public Date getDataNasc() {
+        return dataNasc;
+    }
+
+    public void setDataNasc(Date dataNasc) {
+        this.dataNasc = dataNasc;
     }
 
     public Date getDataCadastro() {
@@ -186,6 +169,13 @@ public class Usuario implements Serializable {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-    
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
 }

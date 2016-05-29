@@ -5,18 +5,12 @@
  */
 package br.com.ifpe.web2.controller;
 
-import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
-import br.com.ifpe.web2.model.Endereco;
 import br.com.ifpe.web2.model.Medico;
-import br.com.ifpe.web2.model.Telefone;
-import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class VisualizarConsultaServlet extends HttpServlet {
 
-    
-   
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,12 +35,33 @@ public class VisualizarConsultaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-      //  request.setAttribute("consulta", consulta);
-        
+
+        //  request.setAttribute("consulta", consulta);
+        listarConsultas(request);
+
         RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
         rd.forward(request, response);
-        
+
+    }
+
+    private void listarConsultas(HttpServletRequest request) {
+        List<Consulta> lConsultasMarcadas = new ArrayList<Consulta>();
+
+        for (int i = 0; i < 3; i++) {
+            Consulta nova = new Consulta();
+            Medico medico = new Medico();
+
+            medico.setEspecialidade("Cardiologia");
+            medico.setNome("João" + i);
+
+            nova.setCodigo(i);
+            nova.setData(new Date());
+            nova.setMedico(medico);
+            nova.setUsuario(medico);
+            lConsultasMarcadas.add(nova);
+        }
+
+        request.setAttribute("lConsultasMarcadas", lConsultasMarcadas);
     }
 
     /**
@@ -62,7 +75,7 @@ public class VisualizarConsultaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

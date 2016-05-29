@@ -5,15 +5,30 @@
  */
 package br.com.ifpe.web2.model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 /**
  *
  * @author Eduardo
  */
-public class Endereco {
+@Embeddable
+public class Endereco implements Serializable {
+    
+    @Column
     private String logradouro;
+    
+    @Column
     private String bairro;
+    
+    @Column
     private String cidade;
+    
+    @Column
     private String estado;
+    
+    @Column
     private int cep;
 
     public Endereco() {

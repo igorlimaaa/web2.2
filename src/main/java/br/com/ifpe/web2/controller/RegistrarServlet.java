@@ -1,10 +1,13 @@
 package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.UsuarioDAO;
+import br.com.ifpe.web2.model.Endereco;
+import br.com.ifpe.web2.model.Telefone;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -88,18 +91,29 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
     
     private Usuario carregarUsuario(HttpServletRequest request) {
         usuario = new Usuario();
+        
         usuario.setNome(request.getParameter("nome"));
-        usuario.setBairro(request.getParameter("bairro"));
-        usuario.setCidade(request.getParameter("cidade"));
-        usuario.setCodigo(1);
-        usuario.setCpf(request.getParameter("cpf"));
-        usuario.setDataCadastro(new Date());
-        usuario.setEmail(request.getParameter("email"));
-        usuario.setEndereco(request.getParameter("endereco"));
-        usuario.setSenha(request.getParameter("senha"));
-        usuario.setSexo('M');
         usuario.setSobrenome(request.getParameter("sobrenome"));
-        usuario.setTelefone(request.getParameter("telefone"));
+        usuario.setCpf(request.getParameter("cpf"));
+        usuario.setEmail(request.getParameter("email"));
+        usuario.setSenha(request.getParameter("senha"));
+        usuario.setSexo(request.getParameter("sexo").charAt(0));
+        usuario.setDataNasc(new Date(request.getParameter("dataNasc")));
+        usuario.setDataCadastro(new Date());
+        
+        Telefone tel = new Telefone();
+        usuario.setTelefone(tel);
+        usuario.getTelefone().setDdd(Integer.parseInt(request.getParameter("ddd")));
+        usuario.getTelefone().setNumero(Integer.parseInt(request.getParameter("telefone")));
+        
+        Endereco endereco = new Endereco();
+        usuario.setEndereco(endereco);
+        usuario.getEndereco().setBairro(request.getParameter("bairro"));
+        usuario.getEndereco().setCidade(request.getParameter("cidade"));
+        usuario.getEndereco().setEstado(request.getParameter("estado"));
+        usuario.getEndereco().setCep(Integer.parseInt(request.getParameter("cep")));
+        usuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
+        
         return usuario;
     }
 

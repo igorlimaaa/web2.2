@@ -5,15 +5,12 @@
  */
 package br.com.ifpe.web2.controller;
 
-import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
-import br.com.ifpe.web2.model.Endereco;
 import br.com.ifpe.web2.model.Medico;
-import br.com.ifpe.web2.model.Telefone;
-import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class VisualizarHistoricoServlet extends HttpServlet {
 
-   
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -40,14 +35,15 @@ public class VisualizarHistoricoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    
-      //  request.setAttribute("consulta", consulta);
+
+        //  request.setAttribute("consulta", consulta);
         
         RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarHistorico.jsp");
         rd.forward(request, response);
-        
+
     }
 
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -59,7 +55,7 @@ public class VisualizarHistoricoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

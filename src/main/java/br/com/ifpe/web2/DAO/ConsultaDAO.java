@@ -2,12 +2,16 @@
 package br.com.ifpe.web2.DAO;
 
 import br.com.ifpe.web2.model.Consulta;
+import br.com.ifpe.web2.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -56,6 +60,24 @@ public class ConsultaDAO implements Serializable{
             return null;
         }
 
+    }
+    
+    public List<Consulta> listarConsultasMarcadas(Usuario usuario){
+        try {
+            Session session = factory.openSession();
+            Criteria criteria = session.createCriteria(Consulta.class);
+            
+            Criterion criUsuario = Restrictions.eq("usuario", usuario);
+            
+            Conjunction conjunction = Restrictions.conjunction();
+            conjunction.add(criUsuario);
+            criteria.add(conjunction);
+            
+            return criteria.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void atualizar(Consulta Consulta) {
