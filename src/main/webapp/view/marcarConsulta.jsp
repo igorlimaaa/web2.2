@@ -15,7 +15,12 @@
         <label for="especialidade">Especialidade:</label>
         
         <select name="especialidade" id="especialidade" class="form-control input-lg" tabindex="1">
-            <option>Selecione</option>
+            <option value="">Selecione</option>
+            <c:forEach var="especialidade" items="${especialidades}">
+                <option value="${especialidade}">
+                    ${especialidade}
+                </option>
+            </c:forEach>
         </select>
         
     </div>
@@ -24,20 +29,25 @@
         <label for="medico">Médico:</label>
         
         <select name="medico" id="medico" class="form-control input-lg" tabindex="2">
-            <option>Selecione</option>
+            <option value="">Selecione</option>
+            <c:forEach var="medico" items="${medicos}">
+                <option value="${medico.nome}">
+                    ${medico.nome}
+                </option>
+            </c:forEach>
         </select>
         
     </div>
     
     <div class="form-group-lg">
         <label for="clinica">Clínica:</label>
-        <select name="comboClinica" class="form-control input-lg" tabindex="2">
+        <select name="clinica" id="clinica" class="form-control input-lg" tabindex="2">
             <option value="">Selecione</option>
             <c:forEach var="clinica" items="${clinicas}">
-                <option value="${clinica.codigo}">
+                <option value="${clinica.nome}">
                     ${clinica.nome}
                 </option>
-             </c:forEach>
+            </c:forEach>
         </select>
     </div>
     

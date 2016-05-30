@@ -5,15 +5,21 @@
  */
 package br.com.ifpe.web2.model;
 
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Eduardo
  */
 
+@Entity(name = "tb_medico")
 public class Medico extends Usuario{
+    
+    @Column
     private String crm;
+    
+    @Column
     private String especialidade;
     
     public Medico() {
@@ -39,5 +45,7 @@ public class Medico extends Usuario{
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
+    
+    
     
 }

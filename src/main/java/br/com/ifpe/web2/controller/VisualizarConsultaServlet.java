@@ -5,6 +5,7 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Medico;
 import java.io.IOException;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo
  */
 public class VisualizarConsultaServlet extends HttpServlet {
+    
+    private ConsultaDAO consultaDAO;
+    private Consulta consultaSelecionada;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -51,13 +55,12 @@ public class VisualizarConsultaServlet extends HttpServlet {
             Consulta nova = new Consulta();
             Medico medico = new Medico();
 
-            medico.setEspecialidade("Cardiologia");
             medico.setNome("João" + i);
 
             nova.setCodigo(i);
             nova.setData(new Date());
-            nova.setMedico(medico);
-            nova.setUsuario(medico);
+            nova.setMedico(medico.getNome());
+            nova.setUsuario(medico.getNome());
             lConsultasMarcadas.add(nova);
         }
 

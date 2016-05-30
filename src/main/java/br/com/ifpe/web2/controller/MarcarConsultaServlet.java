@@ -2,13 +2,15 @@ package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.ClinicaDAO;
 import br.com.ifpe.web2.DAO.ConsultaDAO;
+import br.com.ifpe.web2.DAO.MedicoDAO;
 import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
+import br.com.ifpe.web2.model.Medico;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,17 +25,19 @@ import org.primefaces.context.RequestContext;
  * @author Igorlima
  */
 
-@ManagedBean
-@SessionScoped
 public class MarcarConsultaServlet extends HttpServlet {
 
     private Consulta consulta;
     private ConsultaDAO consultaDAO;
     private Clinica clinica;
     private ClinicaDAO clinicaDAO;
+    private MedicoDAO medicoDAO;
+    private List<String> especialidades;
+    private List<Medico> medicos;
     
     public MarcarConsultaServlet() throws SQLException {
-        consultaDAO = new ConsultaDAO();
+        listarEspecialidades();
+        listarMedicos();
     }
 
     public Consulta getConsulta() {
@@ -60,8 +64,6 @@ public class MarcarConsultaServlet extends HttpServlet {
         consulta = new Consulta();
     }
     
-    
-    
     public void gravar(ActionEvent actionEvent) {
         consultaDAO.inserir(consulta);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -74,16 +76,33 @@ public class MarcarConsultaServlet extends HttpServlet {
         context.execute("dialogListar.hide()");
     }
     
+    private void listarEspecialidades(){
+        especialidades = new ArrayList<String>();
+        
+        especialidades.add("Cardiologista");
+        especialidades.add("Clínica Geral");
+        especialidades.add("Pediatria");
+        
+    }
     
+    private void listarMedicos(){
+        medicos = new ArrayList<Medico>();
+        medicoDAO = new MedicoDAO();
+        medicos = medicoDAO.listarMedicos();
+    }
+    
+    private void listarClinicas(HttpServletRequest request){
+        clinicaDAO = new ClinicaDAO();
+        request.setAttribute("clinicas", clinicaDAO.obterClinicas());
+    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        clinicaDAO = new ClinicaDAO();
-        request.setAttribute("clinicas", clinicaDAO.obterClinicas());
-
-
+        request.setAttribute("especialidades", especialidades);
+        request.setAttribute("medicos", medicos);
+        listarClinicas(request);
         
         RequestDispatcher rd = request.getRequestDispatcher("/view/marcarConsulta.jsp");
         rd.forward(request, response);
@@ -95,10 +114,7 @@ public class MarcarConsultaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        request.getParameter("comboClinica");
-
-        
-        consulta = inserir(request);
+        preencherConsulta(request);
         consultaDAO.inserir(consulta);
         
         RequestDispatcher rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
@@ -106,28 +122,21 @@ public class MarcarConsultaServlet extends HttpServlet {
         
     }
     
-    private Consulta inserir(HttpServletRequest request){
+    private void preencherConsulta(HttpServletRequest request){
         consulta = new Consulta();
         
         //consulta.setUsuario();
-        
         consulta.setAtendida(false);
+        consulta.setClinica(request.getParameter("clinica"));
+        consulta.setEspecialidade(request.getParameter("especialidade"));
+        consulta.setMedico(request.getParameter("medico"));
         consulta.setData(new Date(request.getParameter("data")));
         
-        return consulta;
-        
     }
-    
-    private Clinica pesquisarTodos(HttpServletResponse response){
-        clinica = new Clinica();
-        
-        return clinica;
-    }
-
     
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet responsável por prover ao usuário a opção de marcar uma consulta";
     }// </editor-fold>
 
 }

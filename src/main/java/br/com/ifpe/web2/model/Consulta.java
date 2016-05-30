@@ -29,13 +29,16 @@ public class Consulta implements Serializable{
     private int codigo;
     
     @Column
-    private Usuario usuario;
+    private String usuario;
     
     @Column
-    private Medico medico;
+    private String medico;
     
     @Column
-    private Clinica clinica;
+    private String clinica;
+    
+    @Column 
+    private String especialidade;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -59,27 +62,27 @@ public class Consulta implements Serializable{
         this.codigo = codigo;
     }
 
-    public Usuario getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    public Medico getMedico() {
+    public String getMedico() {
         return medico;
     }
 
-    public void setMedico(Medico medico) {
+    public void setMedico(String medico) {
         this.medico = medico;
     }
 
-    public Clinica getClinica() {
+    public String getClinica() {
         return clinica;
     }
 
-    public void setClinica(Clinica clinica) {
+    public void setClinica(String clinica) {
         this.clinica = clinica;
     }
     
@@ -107,8 +110,14 @@ public class Consulta implements Serializable{
         this.atendida = atendida;
     }
 
+    public String getEspecialidade() {
+        return especialidade;
+    }
 
-    
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
 }
 
 

@@ -23,7 +23,7 @@ public class ConsultaDAO implements Serializable{
     
     public ConsultaDAO () {
         factory = HibernateUtil.getSessionFactory();
-}
+    }
     
     public void inserir(Consulta consulta) {
         Session session = factory.openSession();
