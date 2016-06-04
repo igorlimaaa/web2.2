@@ -49,7 +49,7 @@ public class VisualizarConsultaServlet extends HttpServlet {
 
             if (flag.equals("D")) {
                 //DELETE
-                excluirConsulta(codigo);
+                excluirConsulta(codigo, request, response);
             } else if (flag.equals("U")) {
                 //UPDATE
                 editarConsulta(codigo, request, response);
@@ -61,10 +61,9 @@ public class VisualizarConsultaServlet extends HttpServlet {
         } else {
 
             listarConsultas(request);
+            RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
+            rd.forward(request, response);
         }
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
-        rd.forward(request, response);
 
     }
 
@@ -99,9 +98,11 @@ public class VisualizarConsultaServlet extends HttpServlet {
 
     }
 
-    public void excluirConsulta(int codigo) {
+    public void excluirConsulta(int codigo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         lConsultasMarcadas.remove(codigo);
+        RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
+        rd.forward(request, response);
 
     }
 
