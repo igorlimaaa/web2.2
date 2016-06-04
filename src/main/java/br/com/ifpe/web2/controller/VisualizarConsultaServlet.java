@@ -23,9 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo
  */
 public class VisualizarConsultaServlet extends HttpServlet {
-    
+
     private ConsultaDAO consultaDAO;
     private Consulta consultaSelecionada;
+    private List<Consulta> lConsultasMarcadas = new ArrayList<Consulta>();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -40,16 +41,36 @@ public class VisualizarConsultaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //  request.setAttribute("consulta", consulta);
-        listarConsultas(request);
+        String flag = request.getParameter("consultaflag");
 
+        if ((flag != null && !flag.isEmpty()) && request.getParameter("codigo") != null) {
+
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+
+            if (flag.equals("D")) {
+                //DELETE
+                excluirConsulta(codigo);
+            } else if (flag.equals("U")) {
+                //UPDATE
+                editarConsulta(codigo, request, response);
+            }
+
+            request.setAttribute("codigo", null);
+            request.setAttribute("consultaflag", null);
+
+        } else {
+
+            listarConsultas(request);
+        }
+        
         RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
         rd.forward(request, response);
 
     }
 
     private void listarConsultas(HttpServletRequest request) {
-        List<Consulta> lConsultasMarcadas = new ArrayList<Consulta>();
+
+        lConsultasMarcadas = new ArrayList<Consulta>();
 
         for (int i = 0; i < 3; i++) {
             Consulta nova = new Consulta();
@@ -58,13 +79,30 @@ public class VisualizarConsultaServlet extends HttpServlet {
             medico.setNome("João" + i);
 
             nova.setCodigo(i);
-            nova.setData(new Date());
+            nova.setDataConsulta(new Date());
             nova.setMedico(medico.getNome());
             nova.setUsuario(medico.getNome());
             lConsultasMarcadas.add(nova);
         }
 
         request.setAttribute("lConsultasMarcadas", lConsultasMarcadas);
+    }
+
+    public void editarConsulta(int codigo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Consulta consulta = lConsultasMarcadas.get(codigo);
+
+        request.setAttribute("consultaEditar", consulta);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/view/editarConsulta.jsp");
+        rd.forward(request, response);
+
+    }
+
+    public void excluirConsulta(int codigo) {
+
+        lConsultasMarcadas.remove(codigo);
+
     }
 
     /**

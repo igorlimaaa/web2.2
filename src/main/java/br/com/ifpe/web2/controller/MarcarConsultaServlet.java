@@ -8,9 +8,13 @@ import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Medico;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -114,15 +118,22 @@ public class MarcarConsultaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        preencherConsulta(request);
-        consultaDAO.inserir(consulta);
+        RequestDispatcher rd;
         
-        RequestDispatcher rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+        try {
+            preencherConsulta(request);
+            consultaDAO.inserir(consulta);
+            rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+        } catch (Exception ex) {
+            rd = request.getRequestDispatcher("/view/erropage.jsp");
+            Logger.getLogger(MarcarConsultaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         rd.forward(request, response);
         
     }
     
-    private void preencherConsulta(HttpServletRequest request){
+    private void preencherConsulta(HttpServletRequest request) throws ParseException{
         consulta = new Consulta();
         
         //consulta.setUsuario();
@@ -130,7 +141,10 @@ public class MarcarConsultaServlet extends HttpServlet {
         consulta.setClinica(request.getParameter("clinica"));
         consulta.setEspecialidade(request.getParameter("especialidade"));
         consulta.setMedico(request.getParameter("medico"));
-        consulta.setData(new Date(request.getParameter("data")));
+        
+        SimpleDateFormat data = new SimpleDateFormat("yyyy-mm-dd");
+        
+        consulta.setDataConsulta(data.parse(request.getParameter("data")));
         
     }
     

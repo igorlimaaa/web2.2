@@ -4,6 +4,7 @@
     Author     : Eduardo
 --%>
 
+
 <h2>Visualizar Consulta</h2>
 <p>Visualize suas consultas marcadas.</p>
 
@@ -19,30 +20,30 @@
                     <tr>
                         <td>
                             <span class="table-label">Especialidade:</span>
-                            <span>${consulta.medico.especialidade}</span>
+                            <span>${consulta.especialidade}</span>
                         </td>
                         <td rowspan="5">
-                            <a href="EditarConsultaServlet" class="btn btn-link btn-block">Editar</a>
+                            <a href="VisualizarConsultaServlet?codigo=${consulta.codigo}&consultafalg=U" class="btn btn-link btn-block">Editar</a>
                             <br />
-                            <a href="" class="btn btn-link btn-block">Excluir</a>
+                            <a href="VisualizarConsultaServlet?codigo=${consulta.codigo}&consultaflag=D" class="btn btn-link btn-block">Excluir</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="table-label">Data:</span>
-                            <span>${consulta.data}</span>
+                            <span>${consulta.dataConsulta}</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="table-label">Médico:</span>
-                            <span>Dr(a). ${consulta.medico.nome}</span>            
+                            <span>Dr(a). ${consulta.medico}</span>            
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="table-label">Clínica:</span>
-                            <span>${consulta.clinica.nome}</span>
+                            <span>${consulta.clinica}</span>
                         </td>
                     </tr>
                     <tr>

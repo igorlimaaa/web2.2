@@ -13,7 +13,7 @@
     <div class="form-group-lg">
         <span>Especialidade:</span>
         
-        <span>${requestScope['consulta'].especialidade}</span>
+        <span>${requestScope['consultaEditar'].especialidade}</span>
         
     </div>
     
@@ -21,7 +21,7 @@
         <label for="medico">Médico:</label>
         
         <select name="medico" id="medico" class="form-control input-lg" tabindex="1">
-            <option>${requestScope['consulta'].medico.nome}</option>
+            <option>${requestScope['consultaEditar'].medico}</option>
         </select>
         
     </div>
@@ -30,7 +30,7 @@
 
         <label for="clinica">Clínica:</label>
         <select name="clinica" id="clinica" class="form-control input-lg" tabindex="2">
-            <option>${requestScope['consulta'].clinica.nome}</option>
+            <option>${requestScope['consultaEditar'].clinica}</option>
         </select>
 
     </div>

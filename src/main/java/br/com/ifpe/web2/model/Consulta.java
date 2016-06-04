@@ -42,7 +42,7 @@ public class Consulta implements Serializable{
     
     @Column
     @Temporal(TemporalType.DATE)
-    private Date data;
+    private Date dataConsulta;
     
     @Embedded
     private Diagnostico diagnostico;
@@ -86,12 +86,12 @@ public class Consulta implements Serializable{
         this.clinica = clinica;
     }
     
-    public Date getData() {
-        return data;
+    public Date getDataConsulta() {
+        return dataConsulta;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataConsulta(Date dataConsulta) {
+        this.dataConsulta = dataConsulta;
     }
 
     public Diagnostico getDiagnostico() {
