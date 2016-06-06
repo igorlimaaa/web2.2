@@ -7,10 +7,8 @@ package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Consulta;
-import br.com.ifpe.web2.model.Medico;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,9 +22,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class VisualizarConsultaServlet extends HttpServlet {
 
-    private ConsultaDAO consultaDAO;
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
     private Consulta consultaSelecionada;
-    private List<Consulta> lConsultasMarcadas = new ArrayList<Consulta>();
+    private List<Consulta> lConsultasMarcadas;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,19 +39,12 @@ public class VisualizarConsultaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String flag = request.getParameter("consultaflag");
-
-        if ((flag != null && !flag.isEmpty()) && request.getParameter("codigo") != null) {
+        if (request.getParameter("codigo") != null) {
 
             int codigo = Integer.parseInt(request.getParameter("codigo"));
 
-            if (flag.equals("D")) {
-                //DELETE
-                excluirConsulta(codigo, request, response);
-            } else if (flag.equals("U")) {
-                //UPDATE
-                editarConsulta(codigo, request, response);
-            }
+            //DELETE
+            excluirConsulta(codigo, request, response);
 
             request.setAttribute("codigo", null);
             request.setAttribute("consultaflag", null);
@@ -69,38 +60,17 @@ public class VisualizarConsultaServlet extends HttpServlet {
 
     private void listarConsultas(HttpServletRequest request) {
 
-        lConsultasMarcadas = new ArrayList<Consulta>();
-
-        for (int i = 0; i < 3; i++) {
-            Consulta nova = new Consulta();
-            Medico medico = new Medico();
-
-            medico.setNome("João" + i);
-
-            nova.setCodigo(i);
-            nova.setDataConsulta(new Date());
-            nova.setMedico(medico.getNome());
-            nova.setUsuario(medico.getNome());
-            lConsultasMarcadas.add(nova);
-        }
+        lConsultasMarcadas = consultaDAO.listarConsultasMarcadas("Maria");
 
         request.setAttribute("lConsultasMarcadas", lConsultasMarcadas);
     }
 
-    public void editarConsulta(int codigo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Consulta consulta = lConsultasMarcadas.get(codigo);
-
-        request.setAttribute("consultaEditar", consulta);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/view/editarConsulta.jsp");
-        rd.forward(request, response);
-
-    }
-
     public void excluirConsulta(int codigo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        lConsultasMarcadas.remove(codigo);
+        consultaSelecionada = consultaDAO.getConsulta(codigo);
+
+        consultaDAO.excluir(consultaSelecionada);
+
         RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
         rd.forward(request, response);
 

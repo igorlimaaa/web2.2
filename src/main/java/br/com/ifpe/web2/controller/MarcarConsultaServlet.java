@@ -37,35 +37,8 @@ public class MarcarConsultaServlet extends HttpServlet {
     private ClinicaDAO clinicaDAO;
     private MedicoDAO medicoDAO;
     private List<String> especialidades;
-    private List<Medico> medicos;
     
-    public MarcarConsultaServlet() throws SQLException {
-        listarEspecialidades();
-        listarMedicos();
-    }
-
-    public Consulta getConsulta() {
-        return consulta;
-    }
-
-    public void setConsulta(Consulta consulta) {
-        this.consulta = consulta;
-    }
-
-    public Clinica getClinica() {
-        return clinica;
-    }
-
-    public void setClinica(Clinica clinica) {
-        this.clinica = clinica;
-    }
-    
-    public void novoCli(ActionEvent actionEvent){
-        clinica = new Clinica();
-    }
-
-    public void novo(ActionEvent actionEvent) {
-        consulta = new Consulta();
+    public MarcarConsultaServlet() {
     }
     
     public void gravar(ActionEvent actionEvent) {
@@ -89,10 +62,9 @@ public class MarcarConsultaServlet extends HttpServlet {
         
     }
     
-    private void listarMedicos(){
-        medicos = new ArrayList<Medico>();
+    private void listarMedicos(HttpServletRequest request){
         medicoDAO = new MedicoDAO();
-        medicos = medicoDAO.listarMedicos();
+        request.setAttribute("medicos", medicoDAO.listarMedicos());
     }
     
     private void listarClinicas(HttpServletRequest request){
@@ -104,8 +76,9 @@ public class MarcarConsultaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        listarEspecialidades();
         request.setAttribute("especialidades", especialidades);
-        request.setAttribute("medicos", medicos);
+        listarMedicos(request);
         listarClinicas(request);
         
         RequestDispatcher rd = request.getRequestDispatcher("/view/marcarConsulta.jsp");
@@ -136,14 +109,13 @@ public class MarcarConsultaServlet extends HttpServlet {
     private void preencherConsulta(HttpServletRequest request) throws ParseException{
         consulta = new Consulta();
         
-        //consulta.setUsuario();
+        consulta.setUsuario("Maria");
         consulta.setAtendida(false);
         consulta.setClinica(request.getParameter("clinica"));
         consulta.setEspecialidade(request.getParameter("especialidade"));
         consulta.setMedico(request.getParameter("medico"));
         
         SimpleDateFormat data = new SimpleDateFormat("yyyy-mm-dd");
-        
         consulta.setDataConsulta(data.parse(request.getParameter("data")));
         
     }
@@ -153,4 +125,29 @@ public class MarcarConsultaServlet extends HttpServlet {
         return "Servlet responsável por prover ao usuário a opção de marcar uma consulta";
     }// </editor-fold>
 
+    
+    public Consulta getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(Consulta consulta) {
+        this.consulta = consulta;
+    }
+
+    public Clinica getClinica() {
+        return clinica;
+    }
+
+    public void setClinica(Clinica clinica) {
+        this.clinica = clinica;
+    }
+    
+    public void novoCli(ActionEvent actionEvent){
+        clinica = new Clinica();
+    }
+
+    public void novo(ActionEvent actionEvent) {
+        consulta = new Consulta();
+    }
+    
 }

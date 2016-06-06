@@ -2,7 +2,6 @@
 package br.com.ifpe.web2.DAO;
 
 import br.com.ifpe.web2.model.Consulta;
-import br.com.ifpe.web2.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -33,7 +32,6 @@ public class ConsultaDAO implements Serializable{
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            e.printStackTrace();
         } finally {
             session.close();
 
@@ -45,7 +43,6 @@ public class ConsultaDAO implements Serializable{
             Session session = factory.openSession();
             return (Consulta) session.get(Consulta.class, id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -56,18 +53,18 @@ public class ConsultaDAO implements Serializable{
             Criteria criteria = session.createCriteria(Consulta.class);
             return criteria.list();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
 
     }
     
-    public List<Consulta> listarConsultasMarcadas(Usuario usuario){
+    public List<Consulta> listarConsultasMarcadas(String nomeUsuario){
         try {
             Session session = factory.openSession();
             Criteria criteria = session.createCriteria(Consulta.class);
             
-            Criterion criUsuario = Restrictions.eq("usuario", usuario);
+            Criterion criUsuario = Restrictions.eq("usuario", nomeUsuario);
+            Criterion criMarcada = Restrictions.eq("atendida", 0);
             
             Conjunction conjunction = Restrictions.conjunction();
             conjunction.add(criUsuario);
@@ -75,7 +72,6 @@ public class ConsultaDAO implements Serializable{
             
             return criteria.list();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -88,7 +84,20 @@ public class ConsultaDAO implements Serializable{
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+    
+    public void excluir(Consulta Consulta) {
+        Session session = factory.openSession();
+        try {
+            session.beginTransaction();
+            session.delete(Consulta);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }

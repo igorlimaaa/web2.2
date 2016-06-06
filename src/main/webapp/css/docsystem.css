@@ -61,3 +61,7 @@ textarea{
     border: 1px solid #DDD;
     padding: 15px;
 }
+
+.table-margin{
+    margin: 10px 0;
+}

@@ -5,8 +5,11 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Consulta;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -21,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditarConsultaServlet extends HttpServlet {
 
-    private Consulta consulta;
-    private List<Consulta> listaConsultas = new ArrayList<Consulta>();
+    private Consulta consultaSelecionada;
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,11 +42,15 @@ public class EditarConsultaServlet extends HttpServlet {
 
         RequestDispatcher rd;
 
-        try {
-            
-            rd = request.getRequestDispatcher("/view/editarConsulta.jsp");
+        if (request.getParameter("codigo") != null) {
 
-        } catch (Exception e) {
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+
+            consultaSelecionada = consultaDAO.getConsulta(codigo);
+            request.setAttribute("consultaEditar", consultaSelecionada);
+            rd = request.getRequestDispatcher("view/editarConsulta.jsp");
+
+        } else {
             rd = request.getRequestDispatcher("/view/erropage.jsp");
         }
 
@@ -63,8 +70,34 @@ public class EditarConsultaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarConsulta.jsp");
-        rd.forward(request, response);
+        RequestDispatcher rd;
+
+        try {
+
+            if (consultaSelecionada.getCodigo() > 0) {
+                editarConsulta(request);
+                rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+                rd.forward(request, response);
+            }
+
+        } catch (Exception e) {
+            rd = request.getRequestDispatcher("/view/errorpage.jsp");
+            rd.forward(request, response);
+        }
+        
+        
+
+    }
+
+    public void editarConsulta(HttpServletRequest request) throws ParseException {
+
+        SimpleDateFormat novaData = new SimpleDateFormat("yyyy-mm-dd");
+
+        consultaSelecionada = consultaDAO.getConsulta(consultaSelecionada.getCodigo());
+        consultaSelecionada.setDataConsulta(novaData.parse(request.getParameter("dataremarcada")));
+
+        consultaDAO.atualizar(consultaSelecionada);
+
     }
 
     /**

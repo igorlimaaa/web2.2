@@ -15,7 +15,7 @@
 
         <c:forEach items="${requestScope['lConsultasMarcadas']}" var="consulta">
 
-            <table class="table-visualizar">
+            <table class="table-visualizar table-margin">
                 <tbody>
                     <tr>
                         <td>
@@ -23,9 +23,9 @@
                             <span>${consulta.especialidade}</span>
                         </td>
                         <td rowspan="5">
-                            <a href="VisualizarConsultaServlet?codigo=${consulta.codigo}&consultaflag=U" class="btn btn-link btn-block">Editar</a>
+                            <a href="EditarConsultaServlet?codigo=${consulta.codigo}" class="btn btn-link btn-block">Editar</a>
                             <br />
-                            <a href="VisualizarConsultaServlet?codigo=${consulta.codigo}&consultaflag=D" class="btn btn-link btn-block">Excluir</a>
+                            <a href="VisualizarConsultaServlet?codigo=${consulta.codigo}" class="btn btn-link btn-block">Excluir</a>
                         </td>
                     </tr>
                     <tr>
@@ -44,12 +44,6 @@
                         <td>
                             <span class="table-label">Clínica:</span>
                             <span>${consulta.clinica}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="table-label">Endereço:</span>
-                            <span>${consulta.clinica.endereco.getEnderecoCompleto()}</span>
                         </td>
                     </tr>
                 </tbody>
