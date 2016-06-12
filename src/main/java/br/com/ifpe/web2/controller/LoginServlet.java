@@ -73,11 +73,11 @@ public class LoginServlet extends HttpServlet {
         
         try {
 
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession();
             
             Usuario usuario = new Usuario();
 
-            usuario.setEmail(request.getParameter("email"));
+            usuario.setEmail(request.getParameter("login"));
             usuario.setSenha(request.getParameter("senha"));
 
             usuario = usuarioDAO.fazerLogin(usuario);

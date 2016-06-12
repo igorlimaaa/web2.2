@@ -34,7 +34,7 @@ public class AutorizacaoFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         String loginURL = request.getContextPath() + "/LoginServlet";
         
         usuario = (Usuario) session.getAttribute("usuarioLogado");
