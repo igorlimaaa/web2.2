@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter("/*")
 public class AutorizacaoFilter implements Filter{
 
-    //@Inject
+    @Inject
     private Usuario usuario;
        
     @Override
@@ -30,16 +31,21 @@ public class AutorizacaoFilter implements Filter{
             throws IOException, ServletException {
         
         System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-//        HttpServletResponse response = (HttpServletResponse) res;
-//        HttpServletRequest request = (HttpServletRequest) req;
-//        
-//        if (!usuario.isLogado()) {
-//            RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
-//            rd.forward(request, response);
- //       }else {
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpServletRequest request = (HttpServletRequest) req;
+        
+        HttpSession session = request.getSession(false);
+        String loginURL = request.getContextPath() + "/LoginServlet";
+        
+        usuario = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado())) {
             chain.doFilter(req, res);
+        }else {
+            RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
+            rd.forward(request, response);
         }       
-    //}
+    }
 
     @Override
     public void init(FilterConfig filterConfig){

@@ -43,7 +43,7 @@ public class UsuarioDAO implements Serializable{
         }
     }
     
-    public boolean fazerLogin (Usuario usuario){
+    public Usuario fazerLogin (Usuario usuario){
         try{
             Session session = factory.openSession();
             Criteria criteria = session.createCriteria(Usuario.class);
@@ -57,10 +57,10 @@ public class UsuarioDAO implements Serializable{
             criteria.add(conjunction);
             Usuario usr = (Usuario) criteria.uniqueResult();
             
-            return (usr != null);
+            return usr;
         } catch (Exception e){
             e.printStackTrace();
-            return false;
+            return null;
         } 
     }
     

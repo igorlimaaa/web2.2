@@ -7,14 +7,15 @@ package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Consulta;
+import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,6 +26,7 @@ public class VisualizarConsultaServlet extends HttpServlet {
     private ConsultaDAO consultaDAO = new ConsultaDAO();
     private Consulta consultaSelecionada;
     private List<Consulta> lConsultasMarcadas;
+    private Usuario usuarioLogado;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -60,9 +62,16 @@ public class VisualizarConsultaServlet extends HttpServlet {
 
     private void listarConsultas(HttpServletRequest request) {
 
-        lConsultasMarcadas = consultaDAO.listarConsultasMarcadas("Maria");
+        HttpSession session = request.getSession(false);
+        
+        if(usuarioLogado != null){
+        
+            usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+            lConsultasMarcadas = consultaDAO.listarConsultasMarcadas(usuarioLogado.getCodigo());
 
-        request.setAttribute("lConsultasMarcadas", lConsultasMarcadas);
+            request.setAttribute("lConsultasMarcadas", lConsultasMarcadas);
+        }
     }
 
     public void excluirConsulta(int codigo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -50,6 +50,12 @@ public class Consulta implements Serializable{
     @Column
     private boolean atendida;
     
+    @Column
+    private int idUsuario;
+    
+    @Column
+    private int idMedico;
+    
     public Consulta(){
         
     }
@@ -118,6 +124,22 @@ public class Consulta implements Serializable{
         this.especialidade = especialidade;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdMedico() {
+        return idMedico;
+    }
+
+    public void setIdMedico(int idMedico) {
+        this.idMedico = idMedico;
+    }
+    
 }
 
 

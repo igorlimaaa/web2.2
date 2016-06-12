@@ -5,17 +5,14 @@
  */
 package br.com.ifpe.web2.controller;
 
-import br.com.ifpe.web2.model.Endereco;
-import br.com.ifpe.web2.model.Telefone;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditarPerfilServlet extends HttpServlet {
     
-    private Endereco endereco = new Endereco("Rua 171, n 0", "x", "y", "PE", 55555123);
-    private Telefone telefone = new Telefone(81, 99990000);
+    private Usuario usuarioLogado;
   //  private Usuario currentUsuario = new Usuario("111.111.111-11", "João", "Silva", 'M', "joaosilva@teste.com", "12345", endereco, telefone, new Date());
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -40,9 +36,18 @@ public class EditarPerfilServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-      //  request.setAttribute("usuario", currentUsuario);
+        HttpSession session = request.getSession(false);
+        RequestDispatcher rd;
         
-        RequestDispatcher rd = request.getRequestDispatcher("/view/editarPerfil.jsp");
+        usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if(usuarioLogado != null){
+            request.setAttribute("usuario", usuarioLogado);
+            rd = request.getRequestDispatcher("/view/editarPerfil.jsp");
+        }else{
+            rd = request.getRequestDispatcher("/view/errorpage.jsp");
+        }
+        
         rd.forward(request, response);
         
     }

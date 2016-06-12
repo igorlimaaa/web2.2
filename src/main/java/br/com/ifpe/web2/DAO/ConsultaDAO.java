@@ -58,16 +58,17 @@ public class ConsultaDAO implements Serializable{
 
     }
     
-    public List<Consulta> listarConsultasMarcadas(String nomeUsuario){
+    public List<Consulta> listarConsultasMarcadas(int idUsuario){
         try {
             Session session = factory.openSession();
             Criteria criteria = session.createCriteria(Consulta.class);
             
-            Criterion criUsuario = Restrictions.eq("usuario", nomeUsuario);
+            Criterion criUsuario = Restrictions.eq("idUsuario", idUsuario);
             Criterion criMarcada = Restrictions.eq("atendida", 0);
             
             Conjunction conjunction = Restrictions.conjunction();
             conjunction.add(criUsuario);
+            conjunction.add(criMarcada);
             criteria.add(conjunction);
             
             return criteria.list();

@@ -10,8 +10,6 @@ import br.com.ifpe.web2.model.Consulta;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -91,7 +89,7 @@ public class EditarConsultaServlet extends HttpServlet {
 
     public void editarConsulta(HttpServletRequest request) throws ParseException {
 
-        SimpleDateFormat novaData = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat novaData = new SimpleDateFormat("yyyy-MM-dd");
 
         consultaSelecionada = consultaDAO.getConsulta(consultaSelecionada.getCodigo());
         consultaSelecionada.setDataConsulta(novaData.parse(request.getParameter("dataremarcada")));

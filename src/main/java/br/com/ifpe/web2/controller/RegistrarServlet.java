@@ -38,8 +38,8 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
     
     public String fazerLogin(){
         FacesContext context = FacesContext.getCurrentInstance();
-        if (usuarioDAO.fazerLogin(usuario)){
-            usuario.setLogado(true);;
+        if (usuarioDAO.fazerLogin(usuario) != null){
+            usuario.setLogado(true);
             return "/view/login.jsp?faces-redirect=true";
         } else {
             usuario.setLogado(false);
