@@ -31,10 +31,9 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class RegistrarServlet extends HttpServlet implements Serializable {
 
-    @Inject
-    private Usuario usuario;
-    @Inject
-    private UsuarioDAO usuarioDAO;
+    private Usuario usuario = new Usuario();
+
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     public String fazerLogin(){
         FacesContext context = FacesContext.getCurrentInstance();

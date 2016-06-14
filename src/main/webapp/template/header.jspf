@@ -6,8 +6,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>DocSystem</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/docsystem.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/stylesheet">
+        <link rel="stylesheet" href="css/docsystem.css" type="text/stylesheet">
     </head>
     <body>
 

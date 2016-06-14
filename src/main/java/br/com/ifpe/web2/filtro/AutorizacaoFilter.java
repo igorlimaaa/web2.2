@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class AutorizacaoFilter implements Filter{
 
-    @Inject
+//    @Inject
     private Usuario usuario;
        
     @Override
@@ -36,10 +36,11 @@ public class AutorizacaoFilter implements Filter{
         
         HttpSession session = request.getSession(true);
         String loginURL = request.getContextPath() + "/LoginServlet";
+        String registrarURL = request.getContextPath() + "/RegistrarServlet";
         
         usuario = (Usuario) session.getAttribute("usuarioLogado");
         
-        if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado())) {
+        if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado()) || request.getRequestURI().equals(registrarURL)) {
             chain.doFilter(req, res);
         }else {
             RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
