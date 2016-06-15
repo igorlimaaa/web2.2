@@ -2,12 +2,14 @@ package br.com.ifpe.web2.DAO;
 
 import br.com.ifpe.web2.model.Usuario;
 import java.io.Serializable;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -43,6 +45,21 @@ public class UsuarioDAO implements Serializable{
         }
     }
     
+    public void atualizar(Usuario usuario) {
+        Session session = factory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(usuario);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+    
     public Usuario fazerLogin (Usuario usuario){
         try{
             Session session = factory.openSession();
@@ -62,6 +79,18 @@ public class UsuarioDAO implements Serializable{
             e.printStackTrace();
             return null;
         } 
+    }
+    
+    public List<Usuario> pesquisarUsu() {
+        try {
+            Session session = factory.openSession();
+            Criteria criteria = session.createCriteria(Usuario.class);
+            return criteria.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
     
 }
