@@ -1,6 +1,8 @@
 package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.UsuarioDAO;
+import br.com.ifpe.web2.model.Endereco;
+import br.com.ifpe.web2.model.Telefone;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -28,15 +29,14 @@ public class EditarPerfilServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
+        usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
         if (usuarioLogado != null) {
-
-            usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-            request.setAttribute("usuario", usuarioLogado);
+    
+            request.setAttribute("usuarioEditar", usuarioLogado);
 
         }
 
-//        usuarioDAO = new UsuarioDAO();
-//        request.setAttribute("usuario", usuarioDAO.pesquisarUsu());
         RequestDispatcher rd = request.getRequestDispatcher("/view/editarPerfil.jsp");
         rd.forward(request, response);
     }
@@ -45,20 +45,50 @@ public class EditarPerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        /*currentUsuario.setNome(request.getParameter("nome"));
-        currentUsuario.setSobrenome(request.getParameter("sobrenome"));
-        currentUsuario.setEmail(request.getParameter("email"));
-        currentUsuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
-        currentUsuario.getEndereco().setCidade(request.getParameter("cidade"));
-        currentUsuario.getEndereco().setBairro(request.getParameter("bairro"));
-        currentUsuario.getEndereco().setEstado(request.getParameter("estado"));
-        currentUsuario.getEndereco().setCep(Integer.parseInt(request.getParameter("cep")));
-        currentUsuario.getTelefone().setDdd(Integer.parseInt(request.getParameter("ddd")));
-        currentUsuario.getTelefone().setNumero(Integer.parseInt(request.getParameter("telefone")));
-        currentUsuario.setSenha(request.getParameter("senha"));
-         */
-        RequestDispatcher rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+        usuarioDAO = new UsuarioDAO();
+        RequestDispatcher rd;
+
+        try {
+            carregarUsuario(request);
+            usuarioDAO.atualizar(usuario);
+            rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+
+        } catch (Exception e) {
+            rd = request.getRequestDispatcher("/view/errorpage.jsp");
+        }
+
         rd.forward(request, response);
+
+    }
+
+    private void carregarUsuario(HttpServletRequest request) {
+        usuario = usuarioLogado;
+
+        usuario.setNome(request.getParameter("nome"));
+        usuario.setSobrenome(request.getParameter("sobrenome"));
+        usuario.setEmail(request.getParameter("email"));
+
+        usuario.setEndereco(new Endereco());
+        usuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
+        usuario.getEndereco().setBairro(request.getParameter("bairro"));
+        usuario.getEndereco().setCidade(request.getParameter("cidade"));
+        usuario.getEndereco().setEstado(request.getParameter("estado"));
+
+        if (!request.getParameter("cep").isEmpty()) {
+            usuario.getEndereco().setCep(Integer.parseInt(request.getParameter("cep")));
+        }
+
+        usuario.setTelefone(new Telefone());
+        if (!request.getParameter("ddd").isEmpty()) {
+            usuario.getTelefone().setDdd(Integer.parseInt(request.getParameter("ddd")));
+        }
+        if (!request.getParameter("telefone").isEmpty()) {
+            usuario.getTelefone().setNumero(Integer.parseInt(request.getParameter("telefone")));
+        }
+        
+        if(!request.getParameter("senha").isEmpty()){
+            usuario.setSenha(request.getParameter("senha"));
+        }
 
     }
 

@@ -41,8 +41,7 @@ public class Consulta implements Serializable{
     private String especialidade;
     
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date dataConsulta;
+    private String dataConsulta;
     
     @Embedded
     private Diagnostico diagnostico;
@@ -91,12 +90,20 @@ public class Consulta implements Serializable{
     public void setClinica(String clinica) {
         this.clinica = clinica;
     }
-    
-    public Date getDataConsulta() {
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
+    public String getDataConsulta() {
         return dataConsulta;
     }
 
-    public void setDataConsulta(Date dataConsulta) {
+    public void setDataConsulta(String dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 
@@ -116,14 +123,6 @@ public class Consulta implements Serializable{
         this.atendida = atendida;
     }
 
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -139,7 +138,7 @@ public class Consulta implements Serializable{
     public void setIdMedico(int idMedico) {
         this.idMedico = idMedico;
     }
-    
+
 }
 
 

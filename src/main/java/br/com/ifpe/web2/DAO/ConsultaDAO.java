@@ -64,7 +64,7 @@ public class ConsultaDAO implements Serializable{
             Criteria criteria = session.createCriteria(Consulta.class);
             
             Criterion criUsuario = Restrictions.eq("idUsuario", idUsuario);
-            Criterion criMarcada = Restrictions.eq("atendida", 0);
+            Criterion criMarcada = Restrictions.eq("atendida", false);
             
             Conjunction conjunction = Restrictions.conjunction();
             conjunction.add(criUsuario);

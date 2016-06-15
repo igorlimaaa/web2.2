@@ -11,13 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Eduardo
  */
 public class HomeUsuarioServlet extends HttpServlet {
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -31,10 +31,19 @@ public class HomeUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+
+        RequestDispatcher rd;
+
+        if (request.getParameter("logout") != null) {
+            HttpSession session = request.getSession(false);
+            session.invalidate();
+            rd = request.getRequestDispatcher("/view/login.jsp");
+        } else {
+            rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+        }
+
         rd.forward(request, response);
-        
+
     }
 
     /**
@@ -48,7 +57,7 @@ public class HomeUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

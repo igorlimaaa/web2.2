@@ -64,9 +64,9 @@ public class VisualizarConsultaServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         
-        if(usuarioLogado != null){
+        usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         
-            usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        if(usuarioLogado != null){
         
             lConsultasMarcadas = consultaDAO.listarConsultasMarcadas(usuarioLogado.getCodigo());
 

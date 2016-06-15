@@ -8,7 +8,7 @@
 
 <hr>
 
-<form role="form" action="EditarConsultaServlet" method="post" class="form-horizontal">
+<form id="formRemarcar" role="form" action="EditarConsultaServlet" method="post" class="form-horizontal" onsubmit="return validaData()">
 
     <div class="form-group-lg">
         <span>Especialidade:</span>
@@ -34,7 +34,7 @@
     <div class="form-group-lg">
         <label for="data">Data:</label>
         
-        <input type="date" id="data" name="dataremarcada" class="form-control input-lg" tabindex="1" />
+        <input type="date" id="data" name="data" class="form-control input-lg" tabindex="1" required="required" />
         
     </div>
 

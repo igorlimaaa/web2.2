@@ -89,10 +89,8 @@ public class EditarConsultaServlet extends HttpServlet {
 
     public void editarConsulta(HttpServletRequest request) throws ParseException {
 
-        SimpleDateFormat novaData = new SimpleDateFormat("yyyy-MM-dd");
-
         consultaSelecionada = consultaDAO.getConsulta(consultaSelecionada.getCodigo());
-        consultaSelecionada.setDataConsulta(novaData.parse(request.getParameter("dataremarcada")));
+        consultaSelecionada.setDataConsulta(request.getParameter("data"));
 
         consultaDAO.atualizar(consultaSelecionada);
 

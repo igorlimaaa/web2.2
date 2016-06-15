@@ -11,12 +11,12 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-                <input type="text" name="nome" id="nome" class="form-control input-lg" placeholder="Nome" tabindex="1">
+                <input type="text" name="nome" id="nome" required="required" class="form-control input-lg" placeholder="Nome" tabindex="1">
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-                <input type="text" name="sobrenome" id="sobrenome" class="form-control input-lg" placeholder="Sobrenome" tabindex="2">
+                <input type="text" name="sobrenome" id="sobrenome" required="required" class="form-control input-lg" placeholder="Sobrenome" tabindex="2">
             </div>
         </div>
     </div>
@@ -24,19 +24,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <input type="text" name="cpf" id="cpf" class="form-control input-lg" placeholder="CPF" tabindex="3">
+                <input type="text" name="cpf" id="cpf" maxlength="11" class="form-control input-lg" placeholder="CPF" tabindex="3">
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <input type="number" name="ddd" id="ddd" class="form-control input-lg" placeholder="DDD" tabindex="4" maxlength="2" />
+            <input type="number" name="ddd" id="ddd" maxlength="2" class="form-control input-lg" placeholder="DDD" tabindex="4" maxlength="2" />
         </div>
 
         <div class="col-md-9">
             <div class="form-group">
-                <input type="number" name="telefone" id="telefone" class="form-control input-lg" placeholder="Telefone" tabindex="5" maxlength="9" />
+                <input type="number" name="telefone" maxlength="9" id="telefone" class="form-control input-lg" placeholder="Telefone" tabindex="5" maxlength="9" />
             </div>
         </div>
     </div>
@@ -50,11 +50,11 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="input-lg">
                 <label for="fem">
-                    <input type="radio" class="sexo" id="fem" name="sexo" tabindex="7"/>
+                    <input type="radio" class="sexo" id="fem" value="F" name="sexo" tabindex="7"/>
                     Feminino
                 </label>
                 <label for="masc">
-                    <input type="radio" class="sexo" id="masc" name="sexo" tabindex="8" />
+                    <input type="radio" class="sexo" id="masc" value="M" name="sexo" tabindex="8" />
                     Masculino
                 </label>
             </div>
@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-                <input type="text" name="estado" id="estado" class="form-control input-lg" placeholder="Estado" tabindex="12" />
+                <input type="text" name="estado" maxlength="2" id="estado" class="form-control input-lg" placeholder="Estado" tabindex="12" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
@@ -92,10 +92,10 @@
     </div>
 
     <div class="form-group">
-        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email" tabindex="14">
+        <input type="email" name="email" id="email" required="required" class="form-control input-lg" placeholder="Email" tabindex="14">
     </div>
     <div class="form-group">
-        <input type="password" name="senha" id="senha" class="form-control input-lg" placeholder="Senha" tabindex="15">
+        <input type="password" name="senha" id="senha" maxlength="8" required="required" class="form-control input-lg" placeholder="Senha" tabindex="15">
     </div>
 
     <hr>

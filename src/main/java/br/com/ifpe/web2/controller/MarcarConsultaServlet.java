@@ -8,7 +8,6 @@ import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -92,6 +91,7 @@ public class MarcarConsultaServlet extends HttpServlet {
             throws ServletException, IOException {
         
         RequestDispatcher rd;
+        consultaDAO = new ConsultaDAO();
         
         try {
             preencherConsulta(request);
@@ -108,19 +108,18 @@ public class MarcarConsultaServlet extends HttpServlet {
     
     private void preencherConsulta(HttpServletRequest request) throws ParseException{
         HttpSession session = request.getSession(false);
+        
         usuarioLogado = session != null ? (Usuario) session.getAttribute("usuarioLogado") : null;
         
         consulta = new Consulta();
-        
+        consulta.setCodigo(1);
         consulta.setIdUsuario(usuarioLogado.getCodigo());
-        consulta.setUsuario(usuarioLogado.getNome() + usuarioLogado.getSobrenome());
+        consulta.setUsuario(usuarioLogado.getNome() + " " + usuarioLogado.getSobrenome());
         consulta.setAtendida(false);
         consulta.setClinica(request.getParameter("clinica"));
         consulta.setEspecialidade(request.getParameter("especialidade"));
         consulta.setMedico(request.getParameter("medico"));
-        
-        SimpleDateFormat data = new SimpleDateFormat("yyyy-MM-dd");
-        consulta.setDataConsulta(data.parse(request.getParameter("data")));
+        consulta.setDataConsulta(request.getParameter("data"));
         
     }
     

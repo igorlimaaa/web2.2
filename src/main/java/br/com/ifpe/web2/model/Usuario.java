@@ -10,10 +10,13 @@ import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +37,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Audited
 @SessionScoped
 @Named
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,34 +62,17 @@ public class Usuario implements Serializable {
     @Column
     private String senha;
     
-    @Column
-    private String endereco;
+    @Embedded
+    private Endereco endereco;
+    
+    @Embedded
+    private Telefone telefone;
     
     @Column
-    private String bairro;
-    
-    @Column
-    private String cidade;
-    
-    @Column
-    private String telefone;
-    
-    @Column(name = "data_cadastro")
-    @Temporal(TemporalType.DATE)
-    @NotNull(message = "Data não informada")
-    @NotAudited
-    private Date dataCadastro;
+    private String dataNasc;
     
     @Transient
     private boolean logado;
-
-    public boolean isLogado() {
-        return logado;
-    }
-
-    public void setLogado(boolean logado) {
-        this.logado = logado;
-    }
 
     public Usuario (){
         
@@ -147,43 +134,36 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getTelefone() {
+    public Telefone getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
     }
 
-    public Date getDataCadastro() {
-        return dataCadastro;
+    public String getDataNasc() {
+        return dataNasc;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setDataNasc(String dataNasc) {
+        this.dataNasc = dataNasc;
     }
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
+
 }

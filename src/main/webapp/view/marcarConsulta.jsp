@@ -9,7 +9,7 @@
 
 <hr>
 
-<form role="form" action="MarcarConsultaServlet" method="post" class="form-horizontal">
+<form id="formMarcar" role="form" action="MarcarConsultaServlet" method="post" class="form-horizontal" onsubmit="return validaData()">
 
     <div class="form-group-lg">
         <label for="especialidade">Especialidade:</label>
@@ -54,7 +54,7 @@
     <div class="form-group-lg">
         <label for="data">Data:</label>
         
-        <input type="date" id="data" name="data" class="form-control input-lg" tabindex="4" />
+        <input type="date" id="data" name="data" class="form-control input-lg" tabindex="4" required="required" />
         
     </div>
 

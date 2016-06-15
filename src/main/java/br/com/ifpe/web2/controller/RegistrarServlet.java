@@ -7,14 +7,11 @@ import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,15 +31,15 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
     private Usuario usuario = new Usuario();
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
-    
-    public String fazerLogin(){
+
+    public String fazerLogin() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (usuarioDAO.fazerLogin(usuario) != null){
+        if (usuarioDAO.fazerLogin(usuario) != null) {
             usuario.setLogado(true);
             return "/view/login.jsp?faces-redirect=true";
         } else {
             usuario.setLogado(false);
-            FacesMessage mensagem = new FacesMessage ("Usuário/Senha" + "Inválidos!");
+            FacesMessage mensagem = new FacesMessage("Usuário/Senha" + "Inválidos!");
             mensagem.setSeverity(FacesMessage.SEVERITY_ERROR);
             context.addMessage(null, mensagem);
         }
@@ -70,6 +67,7 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("dialogCadastrarProduto.hide()");
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -78,6 +76,7 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
         rd.forward(request, response);
 
     }
+
     @Override
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -87,21 +86,40 @@ public class RegistrarServlet extends HttpServlet implements Serializable {
         RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
         rd.forward(request, response);
     }
-    
+
     private Usuario carregarUsuario(HttpServletRequest request) {
         usuario = new Usuario();
+
         usuario.setNome(request.getParameter("nome"));
-        usuario.setBairro(request.getParameter("bairro"));
-        usuario.setCidade(request.getParameter("cidade"));
         usuario.setCodigo(1);
         usuario.setCpf(request.getParameter("cpf"));
-        usuario.setDataCadastro(new Date());
         usuario.setEmail(request.getParameter("email"));
-        usuario.setEndereco(request.getParameter("endereco"));
         usuario.setSenha(request.getParameter("senha"));
-        usuario.setSexo('M');
         usuario.setSobrenome(request.getParameter("sobrenome"));
-        usuario.setTelefone(request.getParameter("telefone"));
+        usuario.setDataNasc(request.getParameter("dataNasc"));
+
+        usuario.setEndereco(new Endereco());
+        usuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
+        usuario.getEndereco().setBairro(request.getParameter("bairro"));
+        usuario.getEndereco().setCidade(request.getParameter("cidade"));
+        usuario.getEndereco().setEstado(request.getParameter("estado"));
+
+        if (!request.getParameter("cep").isEmpty()) {
+            usuario.getEndereco().setCep(Integer.parseInt(request.getParameter("cep")));
+        }
+
+        usuario.setTelefone(new Telefone());
+        if (!request.getParameter("ddd").isEmpty()) {
+            usuario.getTelefone().setDdd(Integer.parseInt(request.getParameter("ddd")));
+        }
+        if (!request.getParameter("telefone").isEmpty()) {
+            usuario.getTelefone().setNumero(Integer.parseInt(request.getParameter("telefone")));
+        }
+
+        if (!request.getParameter("sexo").isEmpty()) {
+            usuario.setSexo(request.getParameter("sexo").charAt(0));
+        }
+
         return usuario;
     }
 

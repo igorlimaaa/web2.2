@@ -49,8 +49,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("LoginServlet123");
-        RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
+        
+        RequestDispatcher rd;
+        
+        HttpSession session = request.getSession(false);
+        
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if(usuarioLogado != null){
+            rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+        }else{
+            rd = request.getRequestDispatcher("/view/login.jsp");
+        }
+       
         rd.forward(request, response);
 
     }
