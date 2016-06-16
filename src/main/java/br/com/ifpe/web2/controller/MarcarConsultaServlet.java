@@ -120,7 +120,7 @@ public class MarcarConsultaServlet extends HttpServlet {
         consulta.setEspecialidade(request.getParameter("especialidade"));
         consulta.setMedico(request.getParameter("medico"));
         consulta.setDataConsulta(request.getParameter("data"));
-        
+                
     }
     
     @Override
