@@ -12,7 +12,7 @@
 
     <div class="form-group-lg">
         <label for="paciente">Paciente: </label>
-        <span id="paciente">${requestScope['consulta'].usuario.nome} ${requestScope['consulta'].usuario.sobrenome}</span>
+        <span id="paciente">${requestScope['consulta'].usuario}</span>
     </div>
     
     <div class="form-group-lg">
@@ -22,13 +22,13 @@
 
     <div class="form-group-lg">
         <label for="medico">Médico:</label>
-        <span id="medico">${requestScope['consulta'].medico.nome} ${requestScope['consulta'].medico.sobrenome}</span>
+        <span id="medico">${requestScope['consulta'].medico}</span>
     </div>
 
     <div class="form-group-lg">
 
         <label for="clinica">Clínica:</label>
-        <span id="clinica">${requestScope['consulta'].clinica.nome}</span>
+        <span id="clinica">${requestScope['consulta'].clinica}</span>
 
     </div>
 

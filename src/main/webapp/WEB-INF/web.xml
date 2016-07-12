@@ -96,4 +96,7 @@
             <include-coda>/template/footer.jspf</include-coda>
         </jsp-property-group>
     </jsp-config>
+    <error-page>
+        <location>/view/errorpage.jsp</location>
+    </error-page>
 </web-app>

@@ -5,8 +5,10 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
+import br.com.ifpe.web2.model.Diagnostico;
 import br.com.ifpe.web2.model.Endereco;
 import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Telefone;
@@ -26,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FinalizarConsultaServlet extends HttpServlet {
 
-   
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
+    private Consulta consultaSelecionada;
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -39,11 +43,23 @@ public class FinalizarConsultaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-      //  request.setAttribute("consulta", consulta);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/view/finalizarConsulta.jsp");
+
+        RequestDispatcher rd;
+
+        if (request.getParameter("codigo") != null) {
+
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+
+            consultaSelecionada = consultaDAO.getConsulta(codigo);
+            request.setAttribute("consulta", consultaSelecionada);
+            rd = request.getRequestDispatcher("/view/finalizarConsulta.jsp");
+
+        } else {
+            rd = request.getRequestDispatcher("/view/erropage.jsp");
+        }
+
         rd.forward(request, response);
+
     }
 
     /**
@@ -57,10 +73,27 @@ public class FinalizarConsultaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/view/homeMedico.jsp");
-        rd.forward(request, response);
-        
+
+        RequestDispatcher rd;
+
+        try {
+
+            if (consultaSelecionada.getCodigo() > 0) {
+                consultaSelecionada.setDiagnostico(new Diagnostico());
+                consultaSelecionada.getDiagnostico().setDiagnostico(request.getParameter("diagnostico"));
+                consultaSelecionada.getDiagnostico().setMedicamentos(request.getParameter("medicamentos"));
+                consultaSelecionada.setAtendida(true);
+                consultaDAO.atualizar(consultaSelecionada);
+
+                rd = request.getRequestDispatcher("/view/homeMedico.jsp");
+                rd.forward(request, response);
+            }
+
+        } catch (Exception e) {
+            rd = request.getRequestDispatcher("/view/errorpage.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     /**
