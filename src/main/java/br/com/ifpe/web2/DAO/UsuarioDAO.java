@@ -1,5 +1,6 @@
 package br.com.ifpe.web2.DAO;
 
+import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
@@ -79,6 +80,38 @@ public class UsuarioDAO implements Serializable{
             e.printStackTrace();
             return null;
         } 
+    }
+    
+     public Medico fazerLoginMedico(Medico medico){
+        try{
+            Session session = factory.openSession();
+            Criteria criteria = session.createCriteria(Usuario.class);
+            
+            Criterion login = Restrictions.eq("crm", medico.getCrm());
+            Criterion senha = Restrictions.eq("senha", medico.getSenha());
+            
+            Conjunction conjunction = Restrictions.conjunction();
+            conjunction.add(login);
+            conjunction.add(senha);
+            criteria.add(conjunction);
+            Medico usr = (Medico) criteria.uniqueResult();
+            
+            return usr;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        } 
+    }
+     
+    public Medico getMedico(int id){
+ 
+        try {
+            Session session = factory.openSession();
+            return (Medico) session.get(Usuario.class, id);
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
     
     public List<Usuario> pesquisarUsu() {

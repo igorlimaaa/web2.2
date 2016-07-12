@@ -9,52 +9,60 @@
 
 <hr />
 
-<table class="table-visualizar">
-    <tbody>
-        <tr>
-            <td>
-                <span class="table-label">Especialidade:</span>
-                <span>${requestScope['consulta'].especialidade}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Data:</span>
-                <span>${requestScope['consulta'].data}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Médico:</span>
-                <span>Dr(a). ${requestScope['consulta'].medico.nome}</span>            
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Clínica:</span>
-                <span>${requestScope['consulta'].clinica.nome}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Endereço:</span>
-                <span>${requestScope['consulta'].clinica.endereco.getEnderecoCompleto()}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Diagnóstico: </span>
-                <span>${requestScope['consulta'].diagnostico.diagnostico}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="table-label">Medicamentos: </span>
-                <span>${requestScope['consulta'].diagnostico.medicamentos}</span>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<c:choose>
+    <c:when test="${requestScope['consultasRealizadas'].size() > 0}">
+
+        <c:forEach items="${requestScope['consultasRealizadas']}" var="consulta">
+
+            <table class="table-visualizar">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="table-label">Especialidade:</span>
+                            <span>${consulta.especialidade}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="table-label">Data:</span>
+                            <span>${consulta.dataConsulta}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="table-label">Médico:</span>
+                            <span>Dr(a). ${consulta.medico}</span>            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="table-label">Clínica:</span>
+                            <span>${consulta.clinica}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="table-label">Diagnóstico: </span>
+                            <span>${consulta.diagnostico.diagnostico}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="table-label">Medicamentos: </span>
+                            <span>${consulta.diagnostico.medicamentos}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </c:forEach>
+
+    </c:when>
+
+    <c:otherwise>
+        <p>Não há histórico registrado.</p>
+    </c:otherwise>
+</c:choose>
 
 <div class="button-voltar">
     <a class="btn btn-warning btn-block btn-lg" href="HomeMedicoServlet" tabindex="1">Voltar</a>

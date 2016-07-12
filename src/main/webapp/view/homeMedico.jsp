@@ -5,32 +5,49 @@
 --%>
 
 <p>Seja Bem-Vindo!</p>
+<p>Olá ${usuarioLogado.nome} ${usuarioLogado.sobrenome}!</p>
 
 <h4>Listas de Consultas</h4>
 
 <hr />
 
-<div class="bloco-consulta">
+<c:choose>
+    <c:when test="${requestScope['consultasMarcadas'].size() > 0}">
 
-    <div class="row">
+        <c:forEach items="${requestScope['consultasMarcadas']}" var="consulta">
 
-        <div class="col-md-8 form-group">
-            <span class="table-label">Paciente: </span>
-            <span>${requestScope['consulta'].usuario.nome}</span>
-        </div>
-        <div class="col-md-4">
-            <a href="FinalizarConsultaServlet" class="btn btn-block btn-info">Atender</a>
-        </div>
+            <div class="bloco-consulta">
 
-    </div>
+                <div class="row">
 
-    <div class="row">
-        <div class="col-md-8">
-            <span class="table-label">Especialidade: </span>
-            <span>${requestScope['consulta'].especialidade}</span>
-        </div>
-        <div class="col-md-4">
-            <a href="VisualizarHistoricoServlet" class="btn btn-block btn-info">Histórico</a>
-        </div>
-    </div>
-</div>
+                    <div class="col-md-8 form-group">
+                        <span class="table-label">Paciente: </span>
+                        <span>${consulta.usuario}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="FinalizarConsultaServlet?codigo=${consulta.codigo}" class="btn btn-block btn-info">Atender</a>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="table-label">Data: </span>
+                        <span>${consulta.dataConsulta}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="VisualizarHistoricoServlet?codigo=${consulta.idUsuario}" class="btn btn-block btn-info">Histórico</a>
+                    </div>
+                </div>
+            </div>
+
+        </c:forEach>
+
+    </c:when>
+
+    <c:otherwise>
+        <p>Não há consultas a serem realizadas.</p>
+    </c:otherwise>
+</c:choose>
+
+<a href="HomeMedicoServlet?logout=s" class="btn btn-danger form-control">Sair</a>

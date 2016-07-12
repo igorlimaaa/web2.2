@@ -31,7 +31,7 @@
         <select name="medico" id="medico" class="form-control input-lg" tabindex="2">
             <option value="">Selecione</option>
             <c:forEach var="medico" items="${medicos}">
-                <option value="${medico.nome}">
+                <option value="${medico.codigo}">
                     ${medico.nome}
                 </option>
             </c:forEach>

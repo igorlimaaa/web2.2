@@ -77,12 +77,12 @@ public class ConsultaDAO implements Serializable{
         }
     }
 
-     public List<Consulta> listarConsultasMarcadasMedico(int idUsuario){
+     public List<Consulta> listarConsultasMarcadasMedico(int codigoMedico){
         try {
             Session session = factory.openSession();
             Criteria criteria = session.createCriteria(Consulta.class);
             
-            Criterion criUsuario = Restrictions.eq("idMedico", idUsuario);
+            Criterion criUsuario = Restrictions.eq("idMedico", codigoMedico);
             Criterion criMarcada = Restrictions.eq("atendida", false);
             
             Conjunction conjunction = Restrictions.conjunction();
@@ -96,6 +96,25 @@ public class ConsultaDAO implements Serializable{
         }
     }
     
+     public List<Consulta> listarConsultasMarcadas(String param, int usuario, boolean atendida){
+        try {
+            Session session = factory.openSession();
+            Criteria criteria = session.createCriteria(Consulta.class);
+            
+            Criterion criUsuario = Restrictions.eq(param, usuario);
+            Criterion criMarcada = Restrictions.eq("atendida", atendida);
+            
+            Conjunction conjunction = Restrictions.conjunction();
+            conjunction.add(criUsuario);
+            conjunction.add(criMarcada);
+            criteria.add(conjunction);
+            
+            return criteria.list();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+     
     public void atualizar(Consulta Consulta) {
         Session session = factory.openSession();
         try {

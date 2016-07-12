@@ -5,6 +5,7 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Endereco;
@@ -14,11 +15,13 @@ import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,6 +29,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HomeMedicoServlet extends HttpServlet {
 
+    private List<Consulta> consultasMarcadas;
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
+    private Medico usuarioLogado;
    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -40,10 +46,34 @@ public class HomeMedicoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-      // request.setAttribute("consulta", consulta);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/view/homeMedico.jsp");
+        RequestDispatcher rd;
+
+        if (request.getParameter("logout") != null) {
+            HttpSession session = request.getSession(false);
+            session.invalidate();
+            rd = request.getRequestDispatcher("/view/login.jsp");
+        } else {
+            
+            listarConsultas(request);
+            
+            rd = request.getRequestDispatcher("/view/homeMedico.jsp");
+        }
+
         rd.forward(request, response);
+    }
+
+    private void listarConsultas(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        
+        usuarioLogado = (Medico) session.getAttribute("usuarioLogado");
+        
+        if(usuarioLogado != null){
+        
+            consultasMarcadas = consultaDAO.listarConsultasMarcadasMedico(usuarioLogado.getCodigo());
+
+            request.setAttribute("consultasMarcadas", consultasMarcadas);
+        }
     }
 
     /**

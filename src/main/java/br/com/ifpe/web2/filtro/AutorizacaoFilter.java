@@ -1,5 +1,6 @@
 package br.com.ifpe.web2.filtro;
 
+import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import javax.inject.Inject;
@@ -25,6 +26,7 @@ public class AutorizacaoFilter implements Filter{
 
 //    @Inject
     private Usuario usuario;
+    private Medico medico;
        
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) 
@@ -39,8 +41,13 @@ public class AutorizacaoFilter implements Filter{
         String registrarURL = request.getContextPath() + "/RegistrarServlet";
         
         usuario = (Usuario) session.getAttribute("usuarioLogado");
+        try{
+            medico = (Medico) session.getAttribute("usuarioLogado");
+        } catch(Exception e){
+            System.out.println("Não é médico.");
+        }
         
-        if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado()) || request.getRequestURI().equals(registrarURL)) {
+        if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado()) || (medico != null && medico.isLogado()) || request.getRequestURI().equals(registrarURL)) {
             chain.doFilter(req, res);
         }else {
             RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");

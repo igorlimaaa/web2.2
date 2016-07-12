@@ -13,7 +13,7 @@
                 <legend>Acesso</legend>
 
                 <div class="form-group">
-                    <input type="email" name="login" id="login" required class="form-control input-lg" placeholder="Login" />
+                    <input type="text" name="login" id="login" required class="form-control input-lg" placeholder="Login" />
                 </div>
 
                 <div class="form-group">

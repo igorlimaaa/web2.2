@@ -6,8 +6,10 @@
 package br.com.ifpe.web2.controller;
 
 import br.com.ifpe.web2.DAO.UsuarioDAO;
+import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
+import java.rmi.server.ExportException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +24,7 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,19 +51,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         RequestDispatcher rd;
-        
+
         HttpSession session = request.getSession(false);
-        
+
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        
-        if(usuarioLogado != null){
+
+        if (usuarioLogado != null) {
             rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
-        }else{
+        } else {
             rd = request.getRequestDispatcher("/view/login.jsp");
         }
-       
+
         rd.forward(request, response);
 
     }
@@ -79,31 +81,55 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         System.out.println("br.com.ifpe.web2.controller.LoginServlet.doPost()");
-        
+
         RequestDispatcher rd;
-        
+
         try {
 
             HttpSession session = request.getSession();
-            
-            Usuario usuario = new Usuario();
 
-            usuario.setEmail(request.getParameter("login"));
-            usuario.setSenha(request.getParameter("senha"));
+            String login = request.getParameter("login");
 
-            usuario = usuarioDAO.fazerLogin(usuario);
+            if (login.contains("@")) {
 
-            if (usuario != null) {
-                usuario.setLogado(true);
-                session.setAttribute("usuarioLogado", usuario);
-                rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
-            }else{
-                throw new Exception();
+                Usuario usuario = new Usuario();
+
+                usuario.setEmail(login);
+                usuario.setSenha(request.getParameter("senha"));
+
+                usuario = usuarioDAO.fazerLogin(usuario);
+
+                if (usuario != null) {
+                    usuario.setLogado(true);
+                    session.setAttribute("usuarioLogado", usuario);
+                    rd = request.getRequestDispatcher("/view/homeUsuario.jsp");
+                } else {
+                    throw new Exception("Falha ao logar");
+                }
+
+            } else {
+
+                Medico medico = new Medico();
+
+                medico.setCrm(login);
+                medico.setSenha(request.getParameter("senha"));
+
+                medico = usuarioDAO.fazerLoginMedico(medico);
+
+                if (medico != null) {
+                    medico.setLogado(true);
+                    session.setAttribute("usuarioLogado", medico);
+                    rd = request.getRequestDispatcher("/view/homeMedico.jsp");
+                } else {
+                    throw new ExportException("Falha ao logar");
+                }
+
             }
+
         } catch (Exception e) {
             rd = request.getRequestDispatcher("/view/errorpage.jsp");
         }
-        
+
         rd.forward(request, response);
     }
 

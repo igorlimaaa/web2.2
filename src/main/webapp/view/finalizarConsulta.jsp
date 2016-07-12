@@ -34,7 +34,7 @@
 
     <div class="form-group-lg">
         <label for="data">Data:</label>
-        <span id="data">${requestScope['consulta'].data}</span>
+        <span id="data">${requestScope['consulta'].dataConsulta}</span>
     </div>
 
     <div class="form-group-lg">

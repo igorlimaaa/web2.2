@@ -3,8 +3,10 @@ package br.com.ifpe.web2.controller;
 import br.com.ifpe.web2.DAO.ClinicaDAO;
 import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.DAO.MedicoDAO;
+import br.com.ifpe.web2.DAO.UsuarioDAO;
 import br.com.ifpe.web2.model.Clinica;
 import br.com.ifpe.web2.model.Consulta;
+import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.text.ParseException;
@@ -118,7 +120,13 @@ public class MarcarConsultaServlet extends HttpServlet {
         consulta.setAtendida(false);
         consulta.setClinica(request.getParameter("clinica"));
         consulta.setEspecialidade(request.getParameter("especialidade"));
-        consulta.setMedico(request.getParameter("medico"));
+        
+        UsuarioDAO userDAO = new UsuarioDAO();
+        
+        Medico medico = userDAO.getMedico(Integer.parseInt(request.getParameter("medico")));
+        
+        consulta.setMedico(medico.getNome());
+        consulta.setIdMedico(Integer.parseInt(request.getParameter("medico")));
         consulta.setDataConsulta(request.getParameter("data"));
                 
     }

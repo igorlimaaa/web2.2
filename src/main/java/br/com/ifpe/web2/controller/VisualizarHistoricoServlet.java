@@ -5,8 +5,10 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
 import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Medico;
+import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class VisualizarHistoricoServlet extends HttpServlet {
 
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
+    private List<Consulta> historicoConsultas;
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,14 +41,25 @@ public class VisualizarHistoricoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //  request.setAttribute("consulta", consulta);
+        RequestDispatcher rd;
+
+        if (request.getParameter("codigo") != null) {
+
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+
+            historicoConsultas = consultaDAO.listarConsultasMarcadas("idUsuario", codigo, true);
+            request.setAttribute("codigo", null);
+            
+            request.setAttribute("consultasRealizadas", historicoConsultas);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/view/visualizarHistorico.jsp");
+            rd = request.getRequestDispatcher("/view/visualizarHistorico.jsp");
+        } else {
+            rd = request.getRequestDispatcher("/view/errorpage.jsp");
+        }
         rd.forward(request, response);
 
     }
 
-    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
