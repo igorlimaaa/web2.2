@@ -3,11 +3,17 @@
     Created on : 07/05/2016, 18:19:24
     Author     : Eduardo
 --%>
-
+    
 <p>Seja Bem-Vindo!</p>
 <p>Olá ${usuarioLogado.nome} ${usuarioLogado.sobrenome}!</p>
 
 <h4>Listas de Consultas</h4>
+
+<div class="row">
+    <div class="col-md-3 pull-right">
+        <a href="HomeMedicoServlet" class="btn btn-default form-control">Atualizar</a>
+    </div>
+</div>
 
 <hr />
 
