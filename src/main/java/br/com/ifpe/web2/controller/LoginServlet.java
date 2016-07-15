@@ -5,11 +5,15 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.DAO.ConsultaDAO;
+import br.com.ifpe.web2.DAO.MedicoDAO;
 import br.com.ifpe.web2.DAO.UsuarioDAO;
+import br.com.ifpe.web2.model.Consulta;
 import br.com.ifpe.web2.model.Medico;
 import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import java.rmi.server.ExportException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +28,7 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,16 +42,6 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

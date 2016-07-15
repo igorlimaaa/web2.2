@@ -49,10 +49,10 @@ public class AutorizacaoFilter implements Filter{
         
         if (request.getRequestURI().equals(loginURL) || (usuario != null && usuario.isLogado()) || (medico != null && medico.isLogado()) || request.getRequestURI().equals(registrarURL)) {
             chain.doFilter(req, res);
-        }else {
+        }      else {
             RequestDispatcher rd = request.getRequestDispatcher("/view/login.jsp");
             rd.forward(request, response);
-        }       
+        }
     }
 
     @Override

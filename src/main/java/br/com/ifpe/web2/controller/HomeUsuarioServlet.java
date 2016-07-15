@@ -5,6 +5,7 @@
  */
 package br.com.ifpe.web2.controller;
 
+import br.com.ifpe.web2.model.Usuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

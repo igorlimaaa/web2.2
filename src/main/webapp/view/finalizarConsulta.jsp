@@ -39,12 +39,12 @@
 
     <div class="form-group-lg">
         <label for="diagnostico">Diagnóstico: </label>
-        <textarea placeholder="Descreva o diagnóstico do paciente." id="diagnostico" rows="4" name="diagnostico" class="form-control"  tabindex="1"></textarea>
+        <textarea required placeholder="Descreva o diagnóstico do paciente." id="diagnostico" rows="4" name="diagnostico" class="form-control"  tabindex="1"></textarea>
     </div>
 
     <div class="form-group-lg">
         <label for="medicamentos">Medicamentos:</label>
-        <textarea placeholder="Descreva os medicamentos receitados para o paciente." id="medicamentos" rows="4" name="medicamentos" class="form-control" tabindex="2"></textarea>
+        <textarea required placeholder="Descreva os medicamentos receitados para o paciente." id="medicamentos" rows="4" name="medicamentos" class="form-control" tabindex="2"></textarea>
     </div>
 
     <hr>

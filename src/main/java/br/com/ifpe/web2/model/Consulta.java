@@ -2,6 +2,7 @@ package br.com.ifpe.web2.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
